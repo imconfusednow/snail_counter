@@ -1,0 +1,8 @@
+CREATE TABLE IF NOT EXISTS reaction_log (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    reacter_id TEXT NOT NULL,
+    reactee_id TEXT NOT NULL,
+    emoji TEXT NOT NULL,
+    message_id INTEGER NOT NULL,
+    created_at TEXT DEFAULT CURRENT_TIMESTAMP
+);

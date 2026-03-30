@@ -1,0 +1,25 @@
+{
+  "name": "snail_counter",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "",
+  "type": "module",
+  "imports": {
+    "#config": "./config.json",
+    "#root/*": "./*",
+    "#db/*": "./db/*",
+    "#utils/*": "./utils/*"
+  },
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "register_commands": "node scripts/register-commands.js",
+    "run_migrations": "node scripts/run_migrations.js"
+  },
+  "dependencies": {
+    "better-sqlite3": "^12.8.0",
+    "discord.js": "^14.25.1",
+    "luxon": "^3.7.2"
+  }
+}
