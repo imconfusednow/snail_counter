@@ -1,6 +1,7 @@
 # Snail Counter
-![Logo](https://github.com/imconfusednow/snail_counter/tree/master/images/snail.png "Logo")
 Discord bot which counts how many snail reacts each user gets.
+
+<img src="https://raw.githubusercontent.com/imconfusednow/snail_counter/master/images/snail.png" width="200">
 
 ## To start
 
