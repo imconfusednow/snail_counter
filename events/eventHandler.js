@@ -49,21 +49,21 @@ async function slashCommandEvent(client, interaction) {
 }
 
 async function getSinceTime(option) {
-    const dt = DateTime.now();
+    let dt = DateTime.utc();
     if (option === 'today') {
-        dt.startOf('day');
+        dt = dt.startOf('day');
     }
     else if (option === 'this-week') {
-        dt.startOf('week');
+        dt = dt.startOf('week');
     }
     else if (option === 'this-month') {
-        dt.startOf('month');
+        dt = dt.startOf('month');
     }
     else {
-        return 0;
+        dt = dt.minus({years: 50});
     }
 
-    return dt.toMillis();
+    return dt.toFormat("yyyy-MM-dd HH:mm:ss");
 }
 
 async function addReactionEvent(client, reaction, user) {
