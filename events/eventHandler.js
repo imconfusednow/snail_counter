@@ -21,7 +21,7 @@ async function slashCommandEvent(client, interaction) {
   const guild = client.guilds.cache.get(config.GUILD_ID);
 
   if (command === "snail_count") {
-    const selectedDuration = interaction.options.get('duration').value;
+    const selectedDuration = interaction.options.get('duration')?.value ?? 'all-time';
     const since = await getSinceTime(selectedDuration);
 
     let queryString = `SELECT reactee_id, count(*) AS count FROM reaction_log WHERE emoji = ? AND created_at > ?`;
