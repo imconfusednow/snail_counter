@@ -18,7 +18,6 @@ config.json
 {
 	"TOKEN": "",
     "CLIENT_ID": "",
-    "GUILD_ID": "",
-    "STATUS": ""
+    "GUILDS": [{"id": "", "channel": "", "name": ""}],
 }
 ```

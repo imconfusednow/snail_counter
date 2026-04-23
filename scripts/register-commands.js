@@ -20,6 +20,10 @@ const commands = [
                         value: 'all-time'
                     },
                     {
+                        name: 'Last Hour',
+                        value: 'last-hour'
+                    },
+                    {
                         name: 'This Week',
                         value: 'this-week'
                     },
@@ -34,21 +38,27 @@ const commands = [
                 ]
             }
         ]
-        
-    }
+    },
+    {
+        name: 'random_message',
+        description: 'Random message from snail bot'
+    },
 ];
 
 const rest = new REST().setToken(config.TOKEN);
 
 (async () => {
     try {
-        console.log('Registering commands...');
-        await rest.put(
-            Routes.applicationGuildCommands(config.CLIENT_ID, config.GUILD_ID),
-            {
-                body: commands
-            }
-        );
+        for (let guild of config.GUILDS) {
+            const {name, id:guildId} = guild;
+            console.log(`Registering commands for ${name}`);
+            await rest.put(
+                Routes.applicationGuildCommands(config.CLIENT_ID, guildId),
+                {
+                    body: commands
+                }
+            );
+        }
         console.log('Registration complete');
     } catch (error) {
         console.log(error);
