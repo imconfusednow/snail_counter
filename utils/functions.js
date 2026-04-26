@@ -62,5 +62,5 @@ export function randomMessage() {
     let queryString = "SELECT message FROM dialog";
     const messages = db.prepare(queryString).all();
 
-    return messages[Math.floor(Math.random() * messages.length)];
+    return messages[Math.floor(Math.random() * messages.length)]?.message;
 }
