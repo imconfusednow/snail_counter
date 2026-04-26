@@ -1,13 +1,6 @@
 import { db } from "#db/db.js";
 import { DateTime } from 'luxon';
 
-const messages = [
-  "They see me snailin' they hatin', all these slugs they trying to catch me sliding dirty.",
-  "Doo Doo Doo, I'm a snail, Doo Doo Doo, still a snail.",
-  "You guys are totally snailing it!",
-  "Problem with beign a snail is, people never believe you're not home, so i have no excuse not to come out of my shell.",
-];
-
 export function humanString(string) {
     let parts = string.split(/[-_]/);
     parts = parts.map((part)=>{
@@ -40,7 +33,7 @@ export async function getSinceTime(option) {
 export async function createSnailCountMessageString(client, guildId, duration) {    
     const since = await getSinceTime(duration);
 
-    let queryString = `SELECT reactee_id, count(*) AS count FROM reaction_log WHERE emoji = ? AND created_at > ? AND guild_id = ?`;
+    let queryString = `SELECT reactee_id, count(*) AS count FROM reaction_log WHERE emoji = ? AND created_at > ? AND guild_id = ? AND reactee_id != reacter_id`;
     queryString += `group by reactee_id ORDER BY count(*) desc`;
 
     const snails = db.prepare(queryString).all("🐌", since, guildId);
@@ -66,5 +59,8 @@ export async function createSnailCountMessageString(client, guildId, duration) {
 }
 
 export function randomMessage() {
+    let queryString = "SELECT message FROM dialog";
+    const messages = db.prepare(queryString).all();
+
     return messages[Math.floor(Math.random() * messages.length)];
 }

@@ -23,9 +23,15 @@ async function slashCommandEvent(client, interaction) {
 
   if (command === "snail_count") {
     const selectedDuration = interaction.options.get('duration')?.value ?? 'all-time';
+    const ephemeral = interaction.options.get('ephemeral')?.value ?? false;
     const [replyString, counts] = await createSnailCountMessageString(client, interaction.guildId, selectedDuration);
 
-    interaction.reply(replyString);
+    if (ephemeral) {
+      interaction.reply({content: replyString, flags: MessageFlags.Ephemeral});
+    }
+    else {
+      interaction.reply(replyString);
+    }
   }
   if (command === 'random_message') {
     const msg = randomMessage();

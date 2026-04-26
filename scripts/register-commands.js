@@ -36,6 +36,11 @@ const commands = [
                         value: 'today'
                     }
                 ]
+            },
+            {
+                name: 'ephemeral',
+                description: 'True for temporary post to yourself, otherwise public',
+                type: ApplicationCommandOptionType.Boolean
             }
         ]
     },
