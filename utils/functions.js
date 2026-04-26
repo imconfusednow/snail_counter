@@ -33,7 +33,7 @@ export async function getSinceTime(option) {
 export async function createSnailCountMessageString(client, guildId, duration) {    
     const since = await getSinceTime(duration);
 
-    let queryString = `SELECT reactee_id, count(*) AS count FROM reaction_log WHERE emoji = ? AND created_at > ? AND guild_id = ? AND reactee_id != reacter_id`;
+    let queryString = `SELECT reactee_id, count(*) AS count FROM reaction_log WHERE emoji = ? AND created_at > ? AND guild_id = ? AND reactee_id != reacter_id `;
     queryString += `group by reactee_id ORDER BY count(*) desc`;
 
     const snails = db.prepare(queryString).all("🐌", since, guildId);
