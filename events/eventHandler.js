@@ -45,7 +45,7 @@ async function slashCommandEvent(client, interaction) {
       }];
     }
     else {
-      interaction.reply(msg.message);
+      interaction.reply(dialog_row.message);
     }
     
   }

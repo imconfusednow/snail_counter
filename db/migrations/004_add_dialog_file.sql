@@ -1,1 +1,1 @@
-ALTER TABLE reaction_log ADD guild_id TEXT;
+ALTER TABLE dialog ADD file TEXT;
