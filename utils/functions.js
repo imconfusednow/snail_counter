@@ -68,6 +68,6 @@ export function getDialog(index) {
         return messages[Math.floor(Math.random() * messages.length)];
     }
 
-    const safeIndex = (index > messages.length - 1) ?  messages.length - 1 : safeIndex;
+    const safeIndex = (index > messages.length - 1) ?  messages.length - 1 : index;
     return messages[safeIndex];
 }
