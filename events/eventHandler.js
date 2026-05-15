@@ -1,7 +1,7 @@
 import { db } from "#db/db.js";
 import { createSnailCountMessageString, randomMessage } from '#utils/functions.js';
 import { weeklyCount, monthlyCount, yearlyCount, heavySnailCountCheck } from '#utils/crons.js';
-import { MessageFlags } from 'discord.js';
+import { MessageFlags, AttachmentBuilder } from 'discord.js';
 
 
 const events = new Map();
@@ -39,10 +39,8 @@ async function slashCommandEvent(client, interaction) {
   if (command === 'random_message') {
     const dialog_row = randomMessage();
     if (dialog_row.file) {
-        files: [{ 
-          name: dialog_row.file, 
-          attachment: `../images/message/${dialog_row.file}`
-      }];
+        const file = new AttachmentBuilder(`../images/message/${dialog_row.file}`);
+        files: [file];
     }
     else {
       interaction.reply(dialog_row.message);
