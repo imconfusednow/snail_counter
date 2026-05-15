@@ -32,6 +32,10 @@ const commands = [
                         value: 'this-month'
                     },
                     {
+                        name: 'This Year',
+                        value: 'this-year'
+                    },
+                    {
                         name: 'Today',
                         value: 'today'
                     }

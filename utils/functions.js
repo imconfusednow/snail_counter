@@ -23,6 +23,9 @@ export async function getSinceTime(option) {
     else if (option === 'this-month') {
         dt = dt.startOf('month');
     }
+    else if (option === 'this-year') {
+        dt = dt.startOf('year');
+    }
     else {
         dt = dt.minus({years: 50});
     }
@@ -59,8 +62,8 @@ export async function createSnailCountMessageString(client, guildId, duration) {
 }
 
 export function randomMessage() {
-    let queryString = "SELECT message FROM dialog";
+    let queryString = "SELECT message, file FROM dialog";
     const messages = db.prepare(queryString).all();
 
-    return messages[Math.floor(Math.random() * messages.length)]?.message;
+    return messages[Math.floor(Math.random() * messages.length)];
 }

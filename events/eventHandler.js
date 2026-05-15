@@ -14,6 +14,8 @@ events.set("messageReactionRemove", removedReactionEvent);
 async function readyEvent(client) {
   console.log(`Ready! Logged in as ${client.user.tag}`); 
   weeklyCount(client, '0 23 * * 0');
+  monthlyCount(client, '0 23 * * 0');
+  yearlyCount(client, '0 0 28 * *');
   heavySnailCountCheck(client, '59 * * * *');
 }
 
@@ -35,8 +37,17 @@ async function slashCommandEvent(client, interaction) {
     }
   }
   if (command === 'random_message') {
-    const msg = randomMessage();
-    interaction.reply(msg);
+    const dialog_row = randomMessage();
+    if (dialog_row.file) {
+        files: [{ 
+          name: dialog_row.file, 
+          attachment: `../images/message/${dialog_row.file}`
+      }];
+    }
+    else {
+      interaction.reply(msg.message);
+    }
+    
   }
 }
 

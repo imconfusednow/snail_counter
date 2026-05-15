@@ -19,6 +19,36 @@ export function weeklyCount(client, schedule) {
   });
 }
 
+export function monthlyCount(client, schedule) {
+  cron.schedule(schedule, async () => {
+    for (let guild of config.GUILDS) {
+      const { id: guildId, channel: channelId } = guild;
+      const [replyString, counts] = await createSnailCountMessageString(
+        client,
+        guildId,
+        "this-month",
+      );
+      const channel = client.channels.cache.get(channelId);
+      channel.send(replyString);
+    }
+  });
+}
+
+export function yearlyCount(client, schedule) {
+  cron.schedule(schedule, async () => {
+    for (let guild of config.GUILDS) {
+      const { id: guildId, channel: channelId } = guild;
+      const [replyString, counts] = await createSnailCountMessageString(
+        client,
+        guildId,
+        "this-year",
+      );
+      const channel = client.channels.cache.get(channelId);
+      channel.send(replyString);
+    }
+  });
+}
+
 export function heavySnailCountCheck(client, schedule) {
   cron.schedule(schedule, async () => {
     for (let guild of config.GUILDS) {
