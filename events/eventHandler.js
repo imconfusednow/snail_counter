@@ -1,5 +1,5 @@
 import { db } from "#db/db.js";
-import { createSnailCountMessageString, randomMessage } from '#utils/functions.js';
+import { createSnailCountMessageString, getDialog } from '#utils/functions.js';
 import { weeklyCount, monthlyCount, yearlyCount, heavySnailCountCheck } from '#utils/crons.js';
 import { MessageFlags, AttachmentBuilder } from 'discord.js';
 
@@ -37,10 +37,11 @@ async function slashCommandEvent(client, interaction) {
     }
   }
   if (command === 'random_message') {
-    const dialog_row = randomMessage();
+    const index = interaction.options.get('index')?.value;
+    const dialog_row = getDialog(index);
     if (dialog_row.file) {
-        const file = new AttachmentBuilder(`../images/message/${dialog_row.file}`);
-        files: [file];
+      const file = new AttachmentBuilder(`./images/message/${dialog_row.file}`);
+      interaction.reply({content: dialog_row.message, files: [file]});
     }
     else {
       interaction.reply(dialog_row.message);

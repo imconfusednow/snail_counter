@@ -50,7 +50,14 @@ const commands = [
     },
     {
         name: 'random_message',
-        description: 'Random message from snail bot'
+        description: 'Random message from snail bot',
+        options : [
+            {
+                name: 'index',
+                description: "Grab a specific message using integer",
+                type: ApplicationCommandOptionType.Integer
+            }
+        ]
     },
 ];
 

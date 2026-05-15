@@ -61,9 +61,13 @@ export async function createSnailCountMessageString(client, guildId, duration) {
     return [replyString, counts];
 }
 
-export function randomMessage() {
-    let queryString = "SELECT message, file FROM dialog";
+export function getDialog(index) {
+    const queryString = "SELECT message, file FROM dialog";
     const messages = db.prepare(queryString).all();
+    if (index == null) {
+        return messages[Math.floor(Math.random() * messages.length)];
+    }
 
-    return messages[Math.floor(Math.random() * messages.length)];
+    const safeIndex = (index > messages.length - 1) ?  messages.length - 1 : safeIndex;
+    return messages[safeIndex];
 }
