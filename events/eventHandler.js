@@ -14,8 +14,8 @@ events.set("messageReactionRemove", removedReactionEvent);
 async function readyEvent(client) {
   console.log(`Ready! Logged in as ${client.user.tag}`); 
   weeklyCount(client, '0 23 * * 0');
-  monthlyCount(client, '0 23 * * 0');
-  yearlyCount(client, '0 0 28 * *');
+  monthlyCount(client, '0 0 28 * *');
+  yearlyCount(client, '0 0 31 12 *');
   heavySnailCountCheck(client, '59 * * * *');
 }
 
