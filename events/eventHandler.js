@@ -22,7 +22,11 @@ async function readyEvent(client) {
 async function slashCommandEvent(client, interaction) {
   if (!interaction.isChatInputCommand()) return;
 
-  const command = interaction.commandName; 
+  const command = interaction.commandName;
+
+  if (command === 'ping') {
+    await interaction.reply({content: 'Pong!', flags: MessageFlags.Ephemeral});
+  }
 
   if (command === "snail_count") {
     const selectedDuration = interaction.options.get('duration')?.value ?? 'all-time';
