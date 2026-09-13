@@ -64,10 +64,11 @@ async function slashCommandEvent(client, interaction) {
     const message1 = await channel.messages.fetch(message1Id);
     const message2 = await channel.messages.fetch(message2Id);
 
-    const member1 = message1.author;
-    const member2 = message2.author;
+    const guild = client.guilds.cache.get(guildId);
+    const member1 = await guild.members.fetch(message1.author.id);
+    const member2 = await guild.members.fetch(message2.author.id);
 
-    if (member1.displayName === member2.displayName) {
+    if (member1.user.username === member2.user.username) {
       return interaction.reply(`Those are by the same person, don't waste my time \`${interaction.user.displayName}\` I'm a busy mollusc!`);
     }
 
@@ -78,7 +79,8 @@ async function slashCommandEvent(client, interaction) {
 
     const difference = Math.abs(message1.createdTimestamp - message2.createdTimestamp) / 1000;
 
-    return interaction.reply(`${winner.displayName} was first by ${difference} seconds, so ${loser.displayName} is to be snailed. Snucks to be you, my decision is final!`);
+    return interaction.reply(`## Comparing messages:\n* ${member1.displayName}: ${message1.content}\`\n* ${member2.displayName}: ${message2.content}
+## Verdict\n${winner.displayName} was first by ${difference} seconds, so ${loser.displayName} is to be snailed. Snucks to be you, my decision is final!`);
   }
 }
 
