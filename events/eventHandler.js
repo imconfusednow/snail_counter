@@ -80,7 +80,7 @@ async function slashCommandEvent(client, interaction) {
     const difference = Math.abs(message1.createdTimestamp - message2.createdTimestamp) / 1000;
 
     return interaction.reply(`## Comparing messages:\n* ${member1.displayName}: ${message1.content}\n* ${member2.displayName}: ${message2.content}
-## Verdict\n${winner.displayName} was first by ${difference} seconds, so ${loser.displayName} is to be snailed. Snucks to be you, my decision is final!`);
+## Verdict\n${winner.displayName} was first by ${difference} seconds, so ${loser.displayName} is to be snailed. Snucks to be you, my snailsision is final!`);
   }
 }
 
