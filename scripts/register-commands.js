@@ -59,6 +59,24 @@ const commands = [
             }
         ]
     },
+    {
+        name: 'snail_check',
+        description: 'Check which post should be snailed',
+        options: [
+            {
+                name: 'message_1_id',
+                description: "The ID of the first message",
+                type: ApplicationCommandOptionType.String,
+                required: true
+            },
+            {
+                name: 'message_2_id',
+                description: "The ID of the second message",
+                type: ApplicationCommandOptionType.String,
+                required: true
+            },
+        ]
+    },
 ];
 
 const rest = new REST().setToken(config.TOKEN);

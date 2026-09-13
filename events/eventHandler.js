@@ -23,6 +23,7 @@ async function slashCommandEvent(client, interaction) {
   if (!interaction.isChatInputCommand()) return;
 
   const command = interaction.commandName;
+  const guildId = interaction.guildId;
 
   if (command === 'ping') {
     await interaction.reply({content: 'Pong!', flags: MessageFlags.Ephemeral});
@@ -31,7 +32,7 @@ async function slashCommandEvent(client, interaction) {
   if (command === "snail_count") {
     const selectedDuration = interaction.options.get('duration')?.value ?? 'all-time';
     const ephemeral = interaction.options.get('ephemeral')?.value ?? false;
-    const [replyString, counts] = await createSnailCountMessageString(client, interaction.guildId, selectedDuration);
+    const [replyString, counts] = await createSnailCountMessageString(client, guildId, selectedDuration);
 
     if (ephemeral) {
       interaction.reply({content: replyString, flags: MessageFlags.Ephemeral});
@@ -40,7 +41,7 @@ async function slashCommandEvent(client, interaction) {
       interaction.reply(replyString);
     }
   }
-  if (command === 'random_message') {
+  else if (command === 'random_message') {
     const index = interaction.options.get('index')?.value;
     const dialog_row = getDialog(index);
     if (dialog_row.file) {
@@ -50,7 +51,34 @@ async function slashCommandEvent(client, interaction) {
     else {
       interaction.reply(dialog_row.message);
     }
-    
+  }
+  else if (command === 'snail_check') {
+    const message1Id = interaction.options.get('message_1_id')?.value;
+    const message2Id = interaction.options.get('message_2_id')?.value;
+
+    if (message1Id === message2Id) {
+      return interaction.reply("That's the same message twice for snail's sake :unamused:");
+    }
+
+    const channel = interaction.channel;
+    const message1 = await channel.messages.fetch(message1Id);
+    const message2 = await channel.messages.fetch(message2Id);
+
+    const member1 = message1.author;
+    const member2 = message2.author;
+
+    if (member1.displayName === member2.displayName) {
+      return interaction.reply(`Those are by the same person, don't waste my time \`${interaction.user.displayName}\` I'm a busy mollusc!`);
+    }
+
+    let [winner, loser, winningMessage] = message1.createdTimestamp < message2.createdTimestamp ? [member1, member2, message1] : [member2, member1, message2];
+
+    // Problem with this in that you could expunge any random message when it's not appropriate
+    //unsnailMessage(guildId, winningMessage.id);
+
+    const difference = Math.abs(message1.createdTimestamp - message2.createdTimestamp) / 1000;
+
+    return interaction.reply(`${winner.displayName} was first by ${difference} seconds, so ${loser.displayName} is to be snailed. Snucks to be you, my decision is final!`);
   }
 }
 
@@ -109,6 +137,14 @@ function removeReactionLog(guildId, reacterId, reacteeId, emoji, messageId) {
   );
 
   deleteStatement.run([guildId, reacterId, reacteeId, emoji, messageId]);
+}
+
+function unsnailMessage(guildId, messageId) {
+  const deleteStatement = db.prepare(
+    "DELETE FROM reaction_log WHERE guild_id = ? AND message_id = ? AND emoji = ?",
+  );
+
+  deleteStatement.run([guildId, messageId, "🐌"]);
 }
 
 export default function registerEventHandlers(client) {
