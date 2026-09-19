@@ -62,7 +62,10 @@ export function heavySnailCountCheck(client, schedule) {
         return;
       }
 
-      const [maxKey, maxValue] = Object.keys(counts).reduce((a, b) => counts[a] > counts[b] ? [a, counts[a]] : [b, counts[b]]);
+      const maxKey = Object.keys(counts).reduce((a, b) =>
+        counts[a] > counts[b] ? a : b,
+      );
+      maxValue = counts[maxKey];
 
       if (maxValue < 8) {
         return;
